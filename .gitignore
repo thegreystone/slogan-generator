@@ -22,3 +22,28 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Quarkus
+.quarkus/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Configuration
+*.env
+application-local.properties
+
+# Compiled class files and build directories
+/target/
+/build/
+/out/
