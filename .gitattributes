@@ -6,7 +6,8 @@
 
 # Ensure batch scripts have CRLF line endings
 *.bat text eol=crlf
+*.cmd text eol=crlf
 
 # Ensure Maven wrapper scripts retain their original line endings
-mvnw
+mvnw text eol=lf
 mvnw.cmd
