@@ -7,4 +7,4 @@ docker buildx inspect --bootstrap
 VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 ./mvnw package -Pnative
-docker buildx build -f Dockerfile.native --platform linux/amd64,linux/arm64 -t greystone/slogan-generator:$VERSION-native -t greystone/slogan-generator:latest-native --push .
+docker buildx build -f src/main/docker/Dockerfile.native --platform linux/amd64,linux/arm64 -t greystone/slogan-generator:$VERSION-native -t greystone/slogan-generator:latest-native --push .
