@@ -35,6 +35,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -59,10 +60,28 @@ public class SloganResource {
 	@Path("/image")
 	@Produces("image/png")
 	public Response getImageSlogan(
-			@QueryParam("item") String item, @QueryParam("background") @DefaultValue("ocean") String background,
-			@QueryParam("textColor") @DefaultValue("#FFFFFF") String textColor, @QueryParam("dropshadow") @DefaultValue("true") String dropShadow) throws IOException {
+			@QueryParam("item") String item, @QueryParam("background") @DefaultValue("random") String background,
+			@QueryParam("textColor") @DefaultValue("#FFFFFF") String textColor,
+			@QueryParam("dropshadow") @DefaultValue("true") String dropShadow,
+			@QueryParam("dropshadowdistance") @DefaultValue("2") int dropShadowDistance,
+			@QueryParam("fontSize") @DefaultValue("12") int fontSize,
+			@QueryParam("fontName") @DefaultValue("Arial") String fontName,
+			@QueryParam("fontStyle") @DefaultValue("bold italic") String fontStyle,
+			@QueryParam("opacity") @DefaultValue("1.0") float opacity) throws IOException {
 		String slogan = sloganGenerator.generateSlogan(item);
-		byte[] imageBytes = imageGenerator.generateImage(slogan, background, textColor, Boolean.valueOf(dropShadow));
+
+		ImageConfig config = new ImageConfig.Builder()
+				.background(background)
+				.textColor(textColor)
+				.dropShadow(Boolean.parseBoolean(dropShadow))
+				.dropShadowDistance(dropShadowDistance)
+				.fontSize(fontSize)
+				.fontName(fontName)
+				.fontStyle(fontStyle)
+				.opacity(opacity)
+				.build();
+
+		byte[] imageBytes = imageGenerator.generateImage(slogan, config);
 		return Response.ok(imageBytes).type("image/png").build();
 	}
 

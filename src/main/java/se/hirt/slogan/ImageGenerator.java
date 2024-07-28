@@ -32,7 +32,6 @@
 package se.hirt.slogan;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 
@@ -46,12 +45,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @ApplicationScoped
 public class ImageGenerator {
 	public enum Background {
-		CITY("city"),
-		LUSH("lush"),
-		NEBULA("nebula"),
-		NIGHT("night"),
-		OCEAN("ocean"),
-		SUNSET("sunset");
+		CITY("city"), LUSH("lush"), NEBULA("nebula"), NIGHT("night"), OCEAN("ocean"), SUNSET("sunset");
 
 		private final String fileName;
 
@@ -68,20 +62,14 @@ public class ImageGenerator {
 		}
 	}
 
-	public byte[] generateImage(String slogan, String backgroundStr, String textColor, boolean dropShadow) throws IOException {
+	public byte[] generateImage(String slogan, ImageConfig config) throws IOException {
 		Background background;
 		try {
-			background = "random".equalsIgnoreCase(backgroundStr)
-					? Background.getRandom()
-					: Background.valueOf(backgroundStr.toUpperCase());
+			background = "random".equalsIgnoreCase(config.getBackground()) ? Background.getRandom()
+					: Background.valueOf(config.getBackground().toUpperCase());
 		} catch (IllegalArgumentException e) {
-			slogan = "-->" + backgroundStr + " is not a valid background <--";
+			slogan = "-->" + config.getBackground() + " is not a valid background <--";
 			background = Background.SUNSET;
-		}
-
-		// Ensure textColor starts with #, but don't require it from users (since %23)
-		if (!textColor.startsWith("#")) {
-			textColor = "#" + textColor;
 		}
 
 		try (InputStream is = getClass().getResourceAsStream("/backgrounds/" + background.getFileName() + ".png")) {
@@ -93,18 +81,19 @@ public class ImageGenerator {
 
 			Graphics2D g2d = image.createGraphics();
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g2d.setFont(new Font("Arial", Font.BOLD, 12));
+			//noinspection MagicConstant
+			g2d.setFont(new Font("Arial", config.getFontStyle(), config.getFontSize()));
 
 			FontMetrics fm = g2d.getFontMetrics();
 			int x = (image.getWidth() - fm.stringWidth(slogan)) / 2;
 			int y = ((image.getHeight() - fm.getHeight()) / 2) + fm.getAscent();
 
 			// Draw drop shadow, if wanted
-			if (dropShadow) {
+			if (config.isDropShadow()) {
 				g2d.setColor(Color.BLACK);
-				g2d.drawString(slogan, x + 2, y + 2);
+				g2d.drawString(slogan, x + config.getDropShadowDistance(), y + config.getDropShadowDistance());
 			}
-			g2d.setColor(Color.decode(textColor));
+			g2d.setColor(Color.decode(config.getTextColor()));
 			g2d.drawString(slogan, x, y);
 
 			g2d.dispose();
