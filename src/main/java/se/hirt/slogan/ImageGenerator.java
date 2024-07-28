@@ -51,6 +51,12 @@ public class ImageGenerator {
 			slogan = "-->" + backgroundStr + " is not a valid background <--";
 			background = Background.SUNSET;
 		}
+
+		// Ensure textColor starts with #, but don't require it from users (since %23)
+		if (!textColor.startsWith("#")) {
+			textColor = "#" + textColor;
+		}
+
 		try (InputStream is = getClass().getResourceAsStream("/backgrounds/" + background.getFileName() + ".png")) {
 			if (is == null) {
 				throw new IOException("Background image not found: " + background);
