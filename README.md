@@ -69,3 +69,9 @@ Run the image using:
 ```shell script
 docker run -i --rm -p 8080:8080 greystone/slogan-generator:latest
 ```
+
+To create docker images for multiple platforms and pushing them to Docker hub:
+```shell script
+./mvnw clean package
+./dockerize.sh
+```
