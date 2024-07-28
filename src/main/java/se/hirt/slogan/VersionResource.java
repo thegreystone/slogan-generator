@@ -29,37 +29,23 @@
  *
  * Copyright (C) Marcus Hirt, 2024
  */
-package com.slogangenerator;
+package se.hirt.slogan;
 
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.Test;
-import se.hirt.slogan.ImageConfig;
-import se.hirt.slogan.ImageGenerator;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+@Path("/version")
+public class VersionResource {
 
-import static org.junit.jupiter.api.Assertions.*;
+	@ConfigProperty(name = "quarkus.application.version")
+	String version;
 
-@QuarkusTest
-public class ImageGeneratorTest {
-
-	@Inject
-	ImageGenerator imageGenerator;
-
-	@Test
-	public void testGenerateImage() throws IOException {
-		ImageConfig config = new ImageConfig.Builder().background("ocean").textColor("#FFFFFF").dropShadow(true)
-				.build();
-		byte[] imageBytes = imageGenerator.generateImage("JDK Mission Control", config);
-		assertNotNull(imageBytes);
-		assertTrue(imageBytes.length > 0);
-
-		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
-		assertEquals(460, image.getWidth());
-		assertEquals(50, image.getHeight());
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getVersion() {
+		return version;
 	}
 }
