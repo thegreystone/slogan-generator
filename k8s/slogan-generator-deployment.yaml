@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slogan-generator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: slogan-generator
+  template:
+    metadata:
+      labels:
+        app: slogan-generator
+    spec:
+      containers:
+      - name: slogan-generator
+        image: greystone/slogan-generator:0.1.3-SNAPSHOT
+        ports:
+        - containerPort: 8080
+        command: ["java"]
+        args: ["-jar", "/deployments/quarkus-run.jar"]
