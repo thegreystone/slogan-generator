@@ -1,27 +1,20 @@
-# Build stage
-FROM quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:22.3-java17 AS build
-COPY --chown=quarkus:quarkus mvnw /code/mvnw
-COPY --chown=quarkus:quarkus .mvn /code/.mvn
-COPY --chown=quarkus:quarkus pom.xml /code/
-USER quarkus
-WORKDIR /code
-RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
-COPY src /code/src
-RUN ./mvnw package -Pnative
-
 # Runtime stage
-FROM quay.io/quarkus/quarkus-micro-image:2.0
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4
+RUN microdnf install freetype fontconfig \
+    && microdnf clean all
 WORKDIR /work/
-COPY --from=build /code/target/*-runner /work/application
-
-# Install required libraries
-RUN microdnf install freetype fontconfig
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
 
 # Set up permissions for user `1001`
 RUN chmod 775 /work /work/application \
   && chown -R 1001 /work \
   && chmod -R "g+rwX" /work \
   && chown -R 1001:root /work
+
+# ENV LD_LIBRARY_PATH=/lib64:/usr/lib64
 
 EXPOSE 8080
 USER 1001
