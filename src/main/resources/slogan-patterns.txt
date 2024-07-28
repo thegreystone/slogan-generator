@@ -22,7 +22,6 @@ Maximize your performance with {item}
 Get your daily dose of {item}
 {item}: Probably the best thing since sliced bread
 Warning: {item} may cause extreme happiness
-{item} - Making the impossible possible since yesterday
 {item}: Now with 50% more awesome!
 Don't panic, use {item}
 {item} - For those who dare to be different
@@ -35,8 +34,20 @@ Keep calm and {item} on
 May the {item} be with you
 Error 404: Life not found. Try {item}
 {item}: The Chuck Norris of software
-In case of fire: 1. git commit, 2. git push, 3. use {item}
 Why walk when you can {item}?
-{item}: The answer to life, the universe, and everything
 Eat, Sleep, {item}, Repeat
 When in doubt, {item} it out!
+{item}: Where bugs fear to tread
+{item} - Empower your journey
+Dive into {item}
+Enhance your world with {item}
+{item} - Unveil the extraordinary
+{item} - Redefine your potential
+{item} - The future is here
+{item}: Your secret to success
+Discover power with {item}
+{item}: The ultimate edge
+{item}: The power within
+Unleash excellence with {item}
+{item}: Power up your life
+{item} - Excellence redefined
