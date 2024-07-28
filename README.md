@@ -53,12 +53,19 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 
 You can then execute your native executable with: `./target/slogan-generator-1.0.0-SNAPSHOT-runner`
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+## Creating the docker image
+You can create a docker image using:
 
-## Provided Code
+```shell script
+mvnw clean package -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+```
+To create one with a native image:
 
-### REST
+```shell script
+mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+```
 
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Run the image using:
+```shell script
+docker run -i --rm -p 8080:8080 greystone/slogan-generator:latest
+```
