@@ -51,7 +51,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/slogan-generator-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/slogan-generator-(version)-SNAPSHOT-runner`
 
 ## Creating the docker image
 You can create a docker image using:
