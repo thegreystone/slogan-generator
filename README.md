@@ -4,6 +4,28 @@ This is a simple slogan text or image generator. I wanted to replace the one I h
 since it doesn't support https, and I also wanted the new Raspberry Pi k8s cluster that I've set up
 to have something to do. Also, it's my first day of vacation, so why not. :)
 
+## Using the slogan generator
+
+The slogan generator is up and running at https://api.hirt.se:9090/slogans. It is available and ready to use. 
+
+The api is described here:  
+https://api.hirt.se:9090/slogans/swagger-ui/
+
+Or in openapi format here:  
+https://api.hirt.se:9090/slogans/openapi/
+
+Here's an example on how to get a simple slogan text for OpenJDK:  
+https://api.hirt.se:9090/slogans/text?item=OpenJDK
+
+Here is an example of how I use it on my homepage https://hirt.se:
+```html
+<a href="https://github.com/openjdk/jmc">
+    <img src="https://api.hirt.se:9090/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
+</a>
+```
+It would result in an image like this, which will change each time is it invoked:  
+![Slogan Image](https://api.hirt.se:9090/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF)
+
 ## Running the application in dev mode
 
 You can run the application in dev mode that enables live coding using:
@@ -24,7 +46,7 @@ The application can be packaged using:
 ./mvnw package
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
+It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.  
 Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.

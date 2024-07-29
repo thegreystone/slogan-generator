@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: slogan-generator
-        image: greystone/slogan-generator:0.1.3-SNAPSHOT
+        image: greystone/slogan-generator:0.1.12-SNAPSHOT
         ports:
-        - containerPort: 8080
+        - containerPort: 9090
         command: ["java"]
         args: ["-jar", "/deployments/quarkus-run.jar"]
