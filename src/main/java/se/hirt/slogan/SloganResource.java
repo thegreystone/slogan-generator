@@ -35,11 +35,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.*;
 
 @Path("/")
 public class SloganResource {
@@ -60,31 +62,38 @@ public class SloganResource {
 	@Path("/image")
 	@Produces("image/png")
 	public Response getImageSlogan(
-			@QueryParam("item") String item, @QueryParam("background") @DefaultValue("random") String background,
+			@Parameter(description = "The item to generate a slogan for. If 'slogan' is provided, this parameter is ignored.", example = "Java")
+			@QueryParam("item") String item,
+			@Parameter(description = "A static slogan to use instead of generating one. If provided, 'item' is ignored.", example = "Java: Write once, run anywhere!")
+			@QueryParam("slogan") String slogan,
+			@Parameter(description = "The background image to use", example = "random")
+			@QueryParam("background") @DefaultValue("random") String background,
+			@Parameter(description = "The color of the text in hexadecimal format", example = "#FFFFFF")
 			@QueryParam("textColor") @DefaultValue("#FFFFFF") String textColor,
+			@Parameter(description = "Whether to add a drop shadow to the text", example = "true")
 			@QueryParam("dropshadow") @DefaultValue("true") String dropShadow,
+			@Parameter(description = "The distance of the drop shadow in pixels", example = "2")
 			@QueryParam("dropshadowdistance") @DefaultValue("2") int dropShadowDistance,
+			@Parameter(description = "The font size in points", example = "12")
 			@QueryParam("fontSize") @DefaultValue("12") int fontSize,
+			@Parameter(description = "The name of the font to use", example = "Arial")
 			@QueryParam("fontName") @DefaultValue("Arial") String fontName,
+			@Parameter(description = "The style of the font (can be 'plain', 'bold', 'italic', or 'bold italic')", example = "bold italic")
 			@QueryParam("fontStyle") @DefaultValue("bold italic") String fontStyle,
+			@Parameter(description = "The opacity of the text (0.0 to 1.0)", example = "1.0")
 			@QueryParam("opacity") @DefaultValue("1.0") float opacity) throws IOException {
-		String slogan = sloganGenerator.generateSlogan(item);
 
-		ImageConfig config = new ImageConfig.Builder()
-				.background(background)
-				.textColor(textColor)
-				.dropShadow(Boolean.parseBoolean(dropShadow))
-				.dropShadowDistance(dropShadowDistance)
-				.fontSize(fontSize)
-				.fontName(fontName)
-				.fontStyle(fontStyle)
-				.opacity(opacity)
-				.build();
+		if (slogan == null || slogan.isBlank()) {
+			slogan = sloganGenerator.generateSlogan(item);
+		}
+		ImageConfig config = new ImageConfig.Builder().background(background).textColor(textColor)
+				.dropShadow(Boolean.parseBoolean(dropShadow)).dropShadowDistance(dropShadowDistance).fontSize(fontSize)
+				.fontName(fontName).fontStyle(fontStyle).opacity(opacity).build();
 
 		byte[] imageBytes = imageGenerator.generateImage(slogan, config);
 		return Response.ok(imageBytes).type("image/png").build();
 	}
-
+/**
 	@GET
 	@Path("/test")
 	@Produces(MediaType.TEXT_HTML)
@@ -93,14 +102,16 @@ public class SloganResource {
 		String[] items = {"JDK Mission Control", "Java", "OpenJDK"};
 		for (String item : items) {
 			for (ImageGenerator.Background bg : ImageGenerator.Background.values()) {
-				String slogan = sloganGenerator.generateSlogan(item);
-				String imgUrl = "/image?item=" + URLEncoder.encode(item,
-						StandardCharsets.UTF_8) + "&background=" + bg.name().toLowerCase() + "&textColor=%23FFFFFF";
-				html.append("<p>").append(slogan).append("</p>");
+				// Generate a static slogan for each item-background combination
+				String staticSlogan = sloganGenerator.generateSlogan(item);
+				html.append("<p>").append("Slogan: " + staticSlogan + " Item: " + item + " Background: " + bg.getFileName()).append("</p>");
+				String imgUrl = "/image?slogan=" + URLEncoder.encode(staticSlogan, UTF_8) +
+						"&background=" + bg.name().toLowerCase() +
+						"&textColor=%23FFFFFF";
 				html.append("<img src='").append(imgUrl).append("'><br><br>");
 			}
 		}
 		html.append("</body></html>");
 		return html.toString();
-	}
+	}*/
 }
