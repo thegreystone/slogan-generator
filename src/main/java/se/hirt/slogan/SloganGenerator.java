@@ -58,7 +58,7 @@ public class SloganGenerator {
 
 	public String generateSlogan(String item) {
 		String pattern = patterns.get(ThreadLocalRandom.current().nextInt(patterns.size()));
-		return pattern.replace("{item}", item);
+		return item != null && !item.isEmpty() ? pattern.replace("{item}", item) : pattern;
 	}
 
 	private static List<String> readDefaultPatterns() {

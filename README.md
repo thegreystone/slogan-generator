@@ -24,7 +24,10 @@ Here is an example of how I use it on my homepage https://hirt.se:
 </a>
 ```
 It would result in an image like this, which will change each time is it invoked:  
-![Slogan Image](https://api.hirt.se:9090/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF)
+![Slogan Image](https://hirt.se/images/github/slogan-java-sunset.png)
+![Slogan Image](https://hirt.se/images/github/slogan-java-mountain.png)
+![Slogan Image](https://hirt.se/images/github/slogan-jmc-ocean.png)
+![Slogan Image](https://hirt.se/images/github/slogan-openjdk-clouds.png)
 
 ## Running the application in dev mode
 
