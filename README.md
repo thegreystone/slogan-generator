@@ -29,6 +29,9 @@ It would result in an image like this, which will change each time is it invoked
 ![Slogan Image](https://hirt.se/images/github/slogan-jmc-ocean.png)
 ![Slogan Image](https://hirt.se/images/github/slogan-openjdk-clouds.png)
 
+Here are some examples:
+https://api.hirt.se:9090/slogans/test
+
 ## Running the application in dev mode
 
 You can run the application in dev mode that enables live coding using:
