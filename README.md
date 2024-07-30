@@ -22,7 +22,7 @@ Here is an example of how I use it on my homepage https://hirt.se:
 ```html
 <img src="https://api.hirt.se:9090/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
 ```
-The slogan generator creates images like like these: 
+The slogan generator creates images like like these:  
 ![Slogan Image](https://hirt.se/images/github/slogan-java-sunset.png)
 ![Slogan Image](https://hirt.se/images/github/slogan-java-mountain.png)
 ![Slogan Image](https://hirt.se/images/github/slogan-jmc-ocean.png)
