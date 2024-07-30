@@ -57,14 +57,17 @@ public class SloganGenerator {
 	}
 
 	public String generateSlogan(String item) {
+		if (item == null || item.isBlank()) {
+			return "";
+		}
 		String pattern = patterns.get(ThreadLocalRandom.current().nextInt(patterns.size()));
-		return item != null && !item.isEmpty() ? pattern.replace("{item}", item) : pattern;
+		return pattern.replace("{item}", item);
 	}
 
-	private static List<String> readDefaultPatterns() {
+	static List<String> readDefaultPatterns() {
 		try (InputStream inputStream = SloganGenerator.class.getResourceAsStream("/slogan-patterns.txt");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-			return reader.lines().collect(Collectors.toList());
+			return reader.lines().filter(line -> !line.trim().startsWith("#") && !line.isBlank()).collect(Collectors.toList());
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to load slogan patterns", e);
 		}

@@ -35,6 +35,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,5 +52,24 @@ public class SloganGeneratorTest {
 		assertNotNull(slogan);
 		System.out.println("The slogan was: " + slogan);
 		assertTrue(slogan.contains("JDK Mission Control"));
+	}
+
+	@Test
+	public void testAcceptablePatternLengths() {
+		int acceptableLength = 51 + "{item}".length();
+		List<String> list = SloganGenerator.readDefaultPatterns();
+		for (String pattern : list) {
+			assertTrue(pattern.length() <= acceptableLength, "The pattern " + pattern + " is too long and should be trimmed or removed!");
+		}
+	}
+
+	@Test
+	public void testPatternsHaveItem() {
+		List<String> list = SloganGenerator.readDefaultPatterns();
+		int i = 0;
+		for (String pattern : list) {
+			assertTrue(pattern.contains("{item}"), "Pattern " + i + " (" + pattern + ") didn't contain {item}!");
+			i++;
+		}
 	}
 }

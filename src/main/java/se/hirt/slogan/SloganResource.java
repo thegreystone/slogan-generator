@@ -62,24 +62,24 @@ public class SloganResource {
 	@Path("/image")
 	@Produces("image/png")
 	public Response getImageSlogan(
-			@Parameter(description = "The item to generate a slogan for. If 'slogan' is provided, this parameter is ignored.", example = "Java")
+			@Parameter(description = "The item to generate a slogan for. If 'slogan' is provided, this parameter is ignored. Must be less than 20 characters.", example = "Java")
 			@QueryParam("item") String item,
-			@Parameter(description = "A static slogan to use instead of generating one. If provided, 'item' is ignored.", example = "Java: Write once, run anywhere!")
+			@Parameter(description = "A static slogan to use instead of generating one. If provided, 'item' is ignored. Must be less than 70 characters.", example = "Java: Write once, run anywhere!")
 			@QueryParam("slogan") String slogan,
 			@Parameter(description = "The background image to use", example = "random")
 			@QueryParam("background") @DefaultValue("random") String background,
 			@Parameter(description = "The color of the text in hexadecimal format", example = "#FFFFFF")
-			@QueryParam("textColor") @DefaultValue("#FFFFFF") String textColor,
+			@QueryParam("textcolor") @DefaultValue("#FFFFFF") String textColor,
 			@Parameter(description = "Whether to add a drop shadow to the text", example = "true")
 			@QueryParam("dropshadow") @DefaultValue("true") String dropShadow,
 			@Parameter(description = "The distance of the drop shadow in pixels", example = "2")
 			@QueryParam("dropshadowdistance") @DefaultValue("2") int dropShadowDistance,
 			@Parameter(description = "The font size in points", example = "12")
-			@QueryParam("fontSize") @DefaultValue("12") int fontSize,
+			@QueryParam("fontsize") @DefaultValue("12") int fontSize,
 			@Parameter(description = "The name of the font to use", example = "Arial")
-			@QueryParam("fontName") @DefaultValue("Arial") String fontName,
+			@QueryParam("fontname") @DefaultValue("Arial") String fontName,
 			@Parameter(description = "The style of the font (can be 'plain', 'bold', 'italic', or 'bold italic')", example = "bold italic")
-			@QueryParam("fontStyle") @DefaultValue("bold italic") String fontStyle,
+			@QueryParam("fontstyle") @DefaultValue("bold italic") String fontStyle,
 			@Parameter(description = "The opacity of the text (0.0 to 1.0)", example = "1.0")
 			@QueryParam("opacity") @DefaultValue("1.0") float opacity) throws IOException {
 

@@ -74,18 +74,19 @@ public class ImageGenerator {
 	}
 
 	public byte[] generateImage(String slogan, ImageConfig config) throws IOException {
-		Background background;
-		try {
-			background = "random".equalsIgnoreCase(config.getBackground()) ? Background.getRandom()
-					: Background.valueOf(config.getBackground().toUpperCase());
-		} catch (IllegalArgumentException e) {
-			slogan = "-->" + config.getBackground() + " is not a valid background <--";
-			background = Background.SUNSET;
+		boolean configIsValid = true;
+		if (!config.isValid() || slogan.isBlank()) {
+			if (slogan.isBlank()) {
+				slogan =  "--> Must set either item or slogan parameter! <--";
+			} else {
+				slogan = "-->" + config.getValidationError() + "<--";
+			}
+			config = new ImageConfig.Builder().background("lakenight").fontSize(10).textColor("#FFFFFF").build();
 		}
 
-		try (InputStream is = getClass().getResourceAsStream("/backgrounds/" + background.getFileName() + ".png")) {
+		try (InputStream is = getClass().getResourceAsStream("/backgrounds/" + config.getBackground().getFileName() + ".png")) {
 			if (is == null) {
-				throw new IOException("Background image not found: " + background);
+				throw new IOException("Background image not found: " + config.getBackground().getFileName());
 			}
 			byte[] backgroundBytes = is.readAllBytes();
 			BufferedImage image = Imaging.getBufferedImage(backgroundBytes);
