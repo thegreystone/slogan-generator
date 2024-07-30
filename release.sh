@@ -7,4 +7,6 @@ docker buildx inspect --bootstrap
 VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 ./mvnw package
-docker buildx build -f src/main/docker/Dockerfile.jvm --platform linux/amd64,linux/arm64 -t greystone/slogan-generator:$VERSION -t greystone/slogan-generator:latest --push .
+
+# Only building with the release tag - latest is built on each commit to GitHub
+docker buildx build -f src/main/docker/Dockerfile.jvm --platform linux/amd64,linux/arm64 -t greystone/slogan-generator:$VERSION --push .
