@@ -75,7 +75,7 @@ public class TestResource {
 		for (String item : items) {
 			for (ImageGenerator.Background bg : ImageGenerator.Background.values()) {
 				String staticSlogan = sloganGenerator.generateSlogan(item);
-				String imgUrl = "/image?slogan=" + URLEncoder.encode(staticSlogan, UTF_8) + "&background=" + bg.name()
+				String imgUrl = "image?slogan=" + URLEncoder.encode(staticSlogan, UTF_8) + "&background=" + bg.name()
 						.toLowerCase() + "&textColor=%23FFFFFF";
 
 				html.append("<tr>");
