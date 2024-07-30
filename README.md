@@ -1,3 +1,4 @@
+[![CI](https://github.com/thegreystone/slogan-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/thegreystone/slogan-generator/actions/workflows/ci.yml)
 # slogan-generator
 
 This is a simple slogan text or image generator. I wanted to replace the one I have on my homepage,
