@@ -52,8 +52,7 @@ public class ImageGeneratorTest {
 
 	@Test
 	public void testGenerateImage() throws IOException {
-		ImageConfig config = new ImageConfig.Builder().background("ocean").textColor("#FFFFFF").dropShadow(true)
-				.build();
+		ImageConfig config = new ImageConfig.Builder().background("ocean").textColor("#FFFFFF").dropShadow(true).build();
 		byte[] imageBytes = imageGenerator.generateImage("JDK Mission Control", config);
 		assertNotNull(imageBytes);
 		assertTrue(imageBytes.length > 0);
@@ -61,5 +60,19 @@ public class ImageGeneratorTest {
 		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
 		assertEquals(460, image.getWidth());
 		assertEquals(50, image.getHeight());
+	}
+
+	@Test
+	public void testBadColorConfig() {
+		ImageConfig config = new ImageConfig.Builder().build();
+		assertTrue(config.isValid(), "Empty config should be all defaults and fine!");
+		config = new ImageConfig.Builder().background("ocean").textColor("#FFFFF").dropShadow(true).build();
+		assertFalse(config.isValid(), "Has invalid color (should be 6 characters after #)");
+		config = new ImageConfig.Builder().background("ocean").textColor("FFFFFF").dropShadow(true).build();
+		assertTrue(config.isValid(), "We allow people to forget the pound sign");
+		config = new ImageConfig.Builder().fontSize(-20).build();
+		assertFalse(config.isValid(), "We don't allow negative font sizes");
+		config = new ImageConfig.Builder().dropShadowDistance(400).build();
+		assertFalse(config.isValid(), "Unreasonable drop shadw distance!");
 	}
 }

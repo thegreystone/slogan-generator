@@ -34,7 +34,7 @@ package se.hirt.slogan;
 import java.awt.*;
 
 public class ImageConfig {
-	private String background = "random";
+	private ImageGenerator.Background background = null;
 	private String textColor = "#FFFFFF";
 	private boolean dropShadow = true;
 	private int dropShadowDistance;
@@ -42,8 +42,9 @@ public class ImageConfig {
 	private String fontName = "Arial";
 	private int fontStyle = Font.BOLD;
 	private float opacity = 1.0f;
+	private String validationError = null;
 
-	public String getBackground() {
+	public ImageGenerator.Background getBackground() {
 		return background;
 	}
 
@@ -75,11 +76,36 @@ public class ImageConfig {
 		return opacity;
 	}
 
+	public boolean isValid() {
+		return validationError == null;
+	}
+
+	public String getValidationError() {
+		return validationError;
+	}
+
 	public static class Builder {
 		private ImageConfig config = new ImageConfig();
 
+		public Builder() {
+		}
+
+		public Builder(ImageConfig config) {
+			copyFrom(config);
+		}
+
 		public Builder background(String background) {
-			config.background = background;
+			if (background == null || background.isBlank()) {
+				background = "ocean";
+			}
+			try {
+				config.background = "random".equalsIgnoreCase(background) ? ImageGenerator.Background.getRandom()
+						: ImageGenerator.Background.valueOf(background.toUpperCase());
+			} catch (IllegalArgumentException e) {
+			}
+			if (config.background == null) {
+				config.validationError = background + " is not a valid background";
+			}
 			return this;
 		}
 
@@ -88,8 +114,24 @@ public class ImageConfig {
 			if (!textColor.startsWith("#")) {
 				textColor = "#" + textColor;
 			}
+			textColor = textColor.trim();
+			validateColorFormat(textColor);
 			config.textColor = textColor;
 			return this;
+		}
+
+		private boolean validateColorFormat(String textColor) {
+			if (textColor.length() != 7) {
+				config.validationError = "textcolor error! Format is hex e.g. #9F8E7D. Was: " + textColor;
+				return false;
+			}
+			for (int i = 1; i < textColor.length(); i++) {
+				if (!Character.isLetterOrDigit(textColor.charAt(i))) {
+					config.validationError = "textcolor error! Format is hex e.g. #9F8E7D. Was:  " + textColor;
+					return false;
+				}
+			}
+			return true;
 		}
 
 		public Builder dropShadow(boolean dropShadow) {
@@ -98,6 +140,10 @@ public class ImageConfig {
 		}
 
 		public Builder fontSize(int fontSize) {
+			if (fontSize < 2 || fontSize > 50) {
+				config.validationError = "Font size " + fontSize + " is unreasonable!";
+				return this;
+			}
 			config.fontSize = fontSize;
 			return this;
 		}
@@ -130,13 +176,27 @@ public class ImageConfig {
 		}
 
 		public Builder dropShadowDistance(int dropShadowDistance) {
+			if (dropShadowDistance > 50 || dropShadowDistance < -50) {
+				config.validationError = "Dropshadow distance " + dropShadowDistance + " is unreasonable!";
+				return this;
+			}
 			config.dropShadowDistance = dropShadowDistance;
+			return this;
+		}
+
+		public Builder copyFrom(ImageConfig fromConfig) {
+			config.background = fromConfig.getBackground();
+			opacity(fromConfig.getOpacity());
+			dropShadow(fromConfig.isDropShadow());
+			dropShadowDistance(fromConfig.getDropShadowDistance());
+			textColor(fromConfig.getTextColor());
+			fontName(fromConfig.getFontName());
+			config.fontStyle = fromConfig.getFontStyle();
 			return this;
 		}
 
 		public ImageConfig build() {
 			return config;
 		}
-
 	}
 }
