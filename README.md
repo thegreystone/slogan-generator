@@ -6,7 +6,6 @@
 [![Version](https://img.shields.io/docker/v/greystone/slogan-generator?sort=semver)](https://hub.docker.com/r/greystone/slogan-generator)
 
 # slogan-generator
-# slogan-generator
 
 This is a simple slogan text or image generator. I wanted to replace the one I used to have on my homepage,
 since it doesn't support https, and I also wanted the new Raspberry Pi k8s cluster that I've set up
