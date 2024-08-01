@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: slogan-generator
-        image: greystone/slogan-generator:0.1.12-SNAPSHOT
+        image: greystone/slogan-generator:0.1.16
         ports:
         - containerPort: 9090
         command: ["java"]

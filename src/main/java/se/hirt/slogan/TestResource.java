@@ -71,7 +71,7 @@ public class TestResource {
 		html.append("<table>");
 		html.append("<tr><th>Slogan</th><th>Item</th><th>Background</th><th>Image</th></tr>");
 
-		String[] items = {"JDK Mission Control", "Java", "OpenJDK"};
+		String[] items = {"JDK Mission Control", "Java"};
 		for (String item : items) {
 			for (ImageGenerator.Background bg : ImageGenerator.Background.values()) {
 				String staticSlogan = sloganGenerator.generateSlogan(item);
