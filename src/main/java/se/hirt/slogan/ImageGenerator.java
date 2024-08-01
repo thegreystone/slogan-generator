@@ -45,6 +45,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @ApplicationScoped
 public class ImageGenerator {
 	public enum Background {
+		BLUE("blue"),
 		CITY("city"),
 		CLOUDS("clouds"),
 		LAKE("lake"),
@@ -56,6 +57,7 @@ public class ImageGenerator {
 		NEBULA("nebula"),
 		NIGHT("night"),
 		OCEAN("ocean"),
+		PURPLE("purple"),
 		SUNSET("sunset");
 
 		private final String fileName;
