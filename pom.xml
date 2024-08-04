@@ -33,7 +33,6 @@ Copyright (C) Marcus Hirt, 2024
     <groupId>se.hirt</groupId>
     <artifactId>slogan-generator</artifactId>
     <version>0.1.20-SNAPSHOT</version>
-
     <properties>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <maven.compiler.release>17</maven.compiler.release>
