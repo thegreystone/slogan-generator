@@ -13,7 +13,7 @@ to have something to do. Also, it's my first day of vacation, so why not. :)
 
 ## Using the slogan generator
 
-The slogan generator is up and running at https://api.hirt.se:9090/slogans. It is available and ready to use. 
+The slogan generator is up and running at https://api.hirt.se/slogans. It is available and ready to use. 
 
 The api is described here:  
 https://api.hirt.se/slogans/swagger-ui/
