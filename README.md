@@ -16,17 +16,17 @@ to have something to do. Also, it's my first day of vacation, so why not. :)
 The slogan generator is up and running at https://api.hirt.se:9090/slogans. It is available and ready to use. 
 
 The api is described here:  
-https://api.hirt.se:9090/slogans/swagger-ui/
+https://api.hirt.se/slogans/swagger-ui/
 
 Or in openapi format here:  
-https://api.hirt.se:9090/slogans/openapi/
+https://api.hirt.se/slogans/openapi/
 
 Here's an example on how to get a simple slogan text for OpenJDK:  
-https://api.hirt.se:9090/slogans/text?item=OpenJDK
+https://api.hirt.se/slogans/text?item=OpenJDK
 
 Here is an example of how I use it on my homepage https://hirt.se:
 ```html
-<img src="https://api.hirt.se:9090/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
+<img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
 ```
 The slogan generator creates images like like these:  
 ![Slogan Image](https://hirt.se/images/github/slogan-java-sunset.png)
@@ -35,7 +35,7 @@ The slogan generator creates images like like these:
 ![Slogan Image](https://hirt.se/images/github/slogan-openjdk-clouds.png)
 
 Here are some examples:
-https://api.hirt.se:9090/slogans/test
+https://api.hirt.se/slogans/test
 
 ## Running the application in dev mode
 
