@@ -13,7 +13,7 @@ to have something to do. Also, it's my first day of vacation, so why not. :)
 
 ## Using the slogan generator
 
-The slogan generator is up and running at https://api.hirt.se/slogans. It is available and ready to use. 
+The slogan generator is up and running at https://api.hirt.se/slogans/test. It is available and ready to use.
 
 The api is described here:  
 https://api.hirt.se/slogans/swagger-ui/
@@ -26,7 +26,7 @@ https://api.hirt.se/slogans/text?item=OpenJDK
 
 Here is an example of how I use it on my homepage https://hirt.se:
 ```html
-<img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
+<img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textcolor=%23FFFFFF" border="0" width="460" height="50"/>
 ```
 The slogan generator creates images like like these:  
 ![Slogan Image](docs/images/slogan-java-sunset.png)
@@ -45,7 +45,7 @@ You can run the application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
-Browse to localhost:8080/test to try it out.
+Browse to <http://localhost:8080/test> to try it out.
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
