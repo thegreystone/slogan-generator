@@ -29,10 +29,10 @@ Here is an example of how I use it on my homepage https://hirt.se:
 <img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textColor=%23FFFFFF" border="0" width="460" height="50"/>
 ```
 The slogan generator creates images like like these:  
-![Slogan Image](https://hirt.se/images/github/slogan-java-sunset.png)
-![Slogan Image](https://hirt.se/images/github/slogan-java-mountain.png)
-![Slogan Image](https://hirt.se/images/github/slogan-jmc-ocean.png)
-![Slogan Image](https://hirt.se/images/github/slogan-openjdk-clouds.png)
+![Slogan Image](docs/images/slogan-java-sunset.png)
+![Slogan Image](docs/images/slogan-java-mountain.png)
+![Slogan Image](docs/images/slogan-jmc-ocean.png)
+![Slogan Image](docs/images/slogan-openjdk-clouds.png)
 
 Here are some examples:
 https://api.hirt.se/slogans/test
