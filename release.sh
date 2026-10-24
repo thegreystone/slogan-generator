@@ -1,24 +1,25 @@
 #!/bin/bash
-export DOCKER_BUILDKIT=1
-docker buildx create --name multi-arch-builder --use
-docker buildx inspect --bootstrap
+set -euo pipefail
 
-# Extract version from pom.xml and remove -SNAPSHOT
-VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT//')
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <version> (for example, $0 0.1.20)" >&2
+    exit 1
+fi
 
-# Update the version in pom.xml
-mvn versions:set -DnewVersion=$VERSION
-mvn versions:commit
+VERSION="${1#v}"
+if [[ ! "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+    echo "Expected a stable version such as 0.1.20 or v0.1.20." >&2
+    exit 1
+fi
 
-# Build the project
-./mvnw package
+cd "$(dirname "${BASH_SOURCE[0]}")"
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo "Commit your changes before creating a release tag." >&2
+    exit 1
+fi
 
-# Only building with the release tag - latest is built on each commit to GitHub
-docker buildx build -f src/main/docker/Dockerfile.jvm --platform linux/amd64,linux/arm64 -t greystone/slogan-generator:$VERSION --push .
+TAG="v$VERSION"
+git tag -a "$TAG" -m "Release $VERSION"
+git push origin "refs/tags/$TAG"
 
-# Revert version in pom.xml to next development version
-NEXT_DEV_VERSION="${VERSION%.*}.$((${VERSION##*.} + 1))-SNAPSHOT"
-mvn versions:set -DnewVersion=$NEXT_DEV_VERSION
-mvn versions:commit
-
-echo "Released version $VERSION and updated the pom to the next development version $NEXT_DEV_VERSION"
+echo "Pushed $TAG. GitHub Actions will build the release and publish it to Docker Hub and GitHub Releases."

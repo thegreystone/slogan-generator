@@ -106,8 +106,35 @@ docker run -i --rm -p 8080:8080 greystone/slogan-generator:latest
 ```
 
 ## Publishing images (for maintainers)
-To create docker images for multiple platforms and push them to Docker hub:
 
-```shell script
-./release.sh
+Push a stable version tag to create a release:
+
+```shell
+git tag -a v0.1.20 -m "Release 0.1.20"
+git push origin v0.1.20
+```
+
+Commit and push the workflow changes before creating the first release tag. You can also use `bash release.sh 0.1.20` to create and push the tag from a clean working tree.
+
+The release workflow uses JDK 25, derives the Maven version from the tag, and runs the tests. It then publishes:
+
+- Docker Hub images for `linux/amd64` and `linux/arm64`, tagged `greystone/slogan-generator:0.1.20` and `greystone/slogan-generator:latest`.
+- A GitHub Release with generated release notes, the multi-platform Docker image digest, a portable fat JAR, and `SHA256SUMS`.
+
+The checked-in Maven version can stay a `-SNAPSHOT`; the release version is set only in the workflow's checkout. Stable version tags such as `v0.1.20` trigger publishing. Prerelease tags such as `v0.1.20-rc.1` do not trigger this workflow.
+
+Pushes to `main` publish `greystone/slogan-generator:edge`. Pull requests build and test the application. The `latest` image follows stable tagged releases.
+
+Configure these repository secrets under **Settings → Secrets and variables → Actions**:
+
+- `DOCKERHUB_USERNAME`: the Docker Hub account with push access to `greystone/slogan-generator`.
+- `DOCKERHUB_TOKEN`: that account's Docker Hub access token with write permission.
+
+Image rendering also needs font support: on Linux, install Fontconfig and FreeType. The Docker images include these libraries.
+
+To verify and run a downloaded release with JDK 25 or newer:
+
+```shell
+sha256sum -c SHA256SUMS
+java -jar slogan-generator-0.1.20.jar
 ```
