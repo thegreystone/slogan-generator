@@ -1,6 +1,6 @@
 [![CI](https://github.com/thegreystone/slogan-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/thegreystone/slogan-generator/actions/workflows/ci.yml)
-[![Java Version](https://img.shields.io/badge/Java-17%2B-blue)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-[![Quarkus](https://img.shields.io/badge/Quarkus-3.12.3-blue.svg?style=flat&logo=quarkus)](https://quarkus.io/)
+[![Java Version](https://img.shields.io/badge/Java-25%2B-blue)](https://openjdk.org/projects/jdk/25/)
+[![Quarkus](https://img.shields.io/badge/Quarkus-3.40.1.1-blue.svg?style=flat&logo=quarkus)](https://quarkus.io/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/greystone/slogan-generator.svg)](https://hub.docker.com/r/greystone/slogan-generator)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Version](https://img.shields.io/docker/v/greystone/slogan-generator?sort=semver)](https://hub.docker.com/r/greystone/slogan-generator)
@@ -18,7 +18,7 @@ The slogan generator is up and running at https://api.hirt.se/slogans/test. It i
 The api is described here:  
 https://api.hirt.se/slogans/swagger-ui/
 
-Or in openapi format here:  
+Or in OpenAPI format here:  
 https://api.hirt.se/slogans/openapi/
 
 Here's an example on how to get a simple slogan text for OpenJDK:  
@@ -26,9 +26,9 @@ https://api.hirt.se/slogans/text?item=OpenJDK
 
 Here is an example of how I use it on my homepage https://hirt.se:
 ```html
-<img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textcolor=%23FFFFFF" border="0" width="460" height="50"/>
+<img src="https://api.hirt.se/slogans/image?item=JDK+Mission+Control&background=random&textcolor=%23FFFFFF" style="border: 0;" width="460" height="50" alt="Example slogan image from the hirt.se homepage"/>
 ```
-The slogan generator creates images like like these:  
+The slogan generator creates images like these:  
 ![Slogan Image](docs/images/slogan-java-sunset.png)
 ![Slogan Image](docs/images/slogan-java-mountain.png)
 ![Slogan Image](docs/images/slogan-jmc-ocean.png)
@@ -39,13 +39,15 @@ https://api.hirt.se/slogans/test
 
 ## Running the application in dev mode
 
+Use JDK 25 or newer, with `JAVA_HOME` pointing to your JDK installation.
+
 You can run the application in dev mode that enables live coding using:
 
 ```shell script
 ./mvnw compile quarkus:dev
 ```
 
-Browse to <http://localhost:8080/test> to try it out.
+To try it out, Browse to <http://localhost:8080/test>.
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 

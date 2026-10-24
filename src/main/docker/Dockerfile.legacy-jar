@@ -77,7 +77,10 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.19
+FROM registry.access.redhat.com/ubi9/openjdk-25-runtime:1.24
+USER root
+RUN microdnf install -y freetype fontconfig \
+    && microdnf clean all
 
 ENV LANGUAGE='en_US:en'
 

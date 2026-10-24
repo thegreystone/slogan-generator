@@ -92,6 +92,6 @@ Powered by {item} and a questionable amount of coffee
 {item}: Finally, something the README didn't oversell
 {item}: Because “how hard can it be?” needed an answer
 Less yak shaving. Happier yaks. {item}.
-Behind every great success is someone quietly running {item}
+Behind every success is someone quietly running {item}
 {item}: Because your backup plan was mostly snacks
 {item}: Results so good, management will take credit
